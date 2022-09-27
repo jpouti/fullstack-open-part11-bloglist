@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '16'
       - name: npm install
-        run: npm install && cd client && npm install
+        run: npm install
       - name: lint
         run: npm run lint
       - name: build
@@ -35,4 +35,5 @@ jobs:
         with:
           command: npm run test:e2e
           start: npm run start:test, npm start
-          wait-on: 'http://localhost:3003, http://localhost:3000'
+          wait-on: 'http://localhost:3003/api/testing, http://localhost:3000'
+          config: baseUrl=http://localhost:3000
