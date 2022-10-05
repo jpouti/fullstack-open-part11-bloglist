@@ -46,3 +46,15 @@ jobs:
           healthcheck: "https://still-savannah-13643.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+  tag_release:
+    needs: [deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && !(contains(join(toJson(github.event.commits.*.message)), '#skip')) }}
+        uses: anothrNick/github-tag-action@1.40.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          WITH_V: true
