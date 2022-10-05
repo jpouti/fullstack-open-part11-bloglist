@@ -36,3 +36,13 @@ jobs:
           build: npm run build
           start: npm run start:test
           wait-on: http://localhost:3003
+      - name: deploy
+        if: ${{ github.event_name === 'push' !(contains(join(toJson(github.event.commits.*.message)), '#skip')) }}
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "still-savannah-13643"
+          heroku_email: "juhp944@gmail.com"
+          healthcheck: "https://still-savannah-13643/health"
+          checkstring: "ok"
+          rollbackonhealthcheckfailed: true
