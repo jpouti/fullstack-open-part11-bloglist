@@ -43,6 +43,6 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "still-savannah-13643"
           heroku_email: "juhp944@gmail.com"
-          healthcheck: "https://still-savannah-13643/health"
+          healthcheck: "https://still-savannah-13643.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
