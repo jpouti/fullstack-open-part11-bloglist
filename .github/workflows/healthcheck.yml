@@ -1,4 +1,3 @@
- uncomment to have daily health checks
 name: Health Check
 
 on:
