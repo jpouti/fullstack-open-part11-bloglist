@@ -46,6 +46,22 @@ jobs:
           healthcheck: "https://still-savannah-13643.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+      - name: failed build notification
+        if: ${{ failure() && github.event_name == 'push' && !(contains(join(toJson(github.event.commits.*.message)), '#skip')) }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error
+          description: ${{ github.event.commits[0].url }}
+          text: Build failed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Build success notification
+        if: ${{ success() && github.event_name == 'push' && !(contains(join(toJson(github.event.commits.*.message)), '#skip')) }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          description: "https://still-savannah-13643.herokuapp.com"
+          text: A new version of Bloglist has been deployed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     needs: [deployment_pipeline]
     runs-on: ubuntu-20.04
