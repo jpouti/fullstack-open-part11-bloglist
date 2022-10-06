@@ -1,23 +1,22 @@
-# uncomment to have daily health checks
-#name: Health Check
-#
-#on:
-#  schedule:
-#    - cron: '30 20 * * *' 
-#
-#jobs:
-#  scheduled_health_check:
-#    runs-on: ubuntu-20.04
-#    steps:
-#      - name: Check the deployed service URL
-#        uses: jtalk/url-health-check-action@v2
-#        with:
-#          url: "https://still-savannah-13643.herokuapp.com/health"
-#          # Follow redirects, or just report success on 3xx status codes
-#          follow-redirect: false # Optional, defaults to "false"
-#          # Fail this action after this many failed attempts
-#          max-attempts: 3 # Optional, defaults to 1
-#          # Delay between retries
-#          retry-delay: 5s # Optional, only applicable to max-attempts > 1
-#          # Retry all errors, including 404. This option might trigger curl upgrade.
-#          retry-all: false # Optional, defaults to "false"
+name: Health Check
+
+on:
+  schedule:
+    - cron: '30 20 * * 5'
+
+jobs:
+  scheduled_health_check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: "https://still-savannah-13643.herokuapp.com/health"
+          # Follow redirects, or just report success on 3xx status codes
+          follow-redirect: false # Optional, defaults to "false"
+          # Fail this action after this many failed attempts
+          max-attempts: 3 # Optional, defaults to 1
+          # Delay between retries
+          retry-delay: 5s # Optional, only applicable to max-attempts > 1
+          # Retry all errors, including 404. This option might trigger curl upgrade.
+          retry-all: false # Optional, defaults to "false"
